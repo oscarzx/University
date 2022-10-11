@@ -169,7 +169,7 @@ namespace LinqSnippets
             // Obtain all Employees of all Enterprises
             var employeeList = enterprise.SelectMany(e => e.Employees);
 
-            // Know if any list es empty
+            // Know if any list is empty
             bool hasEnterprise = enterprise.Any();
 
             bool hasEmployees = enterprise.Any(e => e.Employees.Any());
