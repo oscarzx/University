@@ -18,16 +18,25 @@ namespace UniversityApiBackend.Controllers
     public class CoursesController : ControllerBase
     {
         private readonly UniversityDbContext _context;
+        private readonly ILogger<CoursesController> _logger;
 
-        public CoursesController(UniversityDbContext context)
+        public CoursesController(UniversityDbContext context, ILogger<CoursesController> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         // GET: api/Courses
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Course>>> GetCourses()
         {
+            _logger.LogTrace($"{nameof(CoursesController)}  - {nameof(GetCourses)} - Trace Level Log");
+            _logger.LogDebug($"{nameof(CoursesController)}  - {nameof(GetCourses)} Debug Level Log");
+            _logger.LogInformation($"{nameof(CoursesController)}  - {nameof(GetCourses)} - Information Level Log");
+            _logger.LogWarning($"{nameof(CoursesController)}  - {nameof(GetCourses)} - Warning Level Log");
+            _logger.LogError($"{nameof(CoursesController)}  - {nameof(GetCourses)} - Error Level Log");
+            _logger.LogCritical($"{nameof(CoursesController)}  - {nameof(GetCourses)} - Critical Level Log");
+
             return await _context.Courses.ToListAsync();
         }
 

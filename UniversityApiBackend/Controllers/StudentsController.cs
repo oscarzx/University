@@ -20,17 +20,26 @@ namespace UniversityApiBackend.Controllers
     {
         private readonly UniversityDbContext _context;
         private readonly IStudentsService _studentsService;
+        private readonly ILogger<StudentsController> _logger;
 
-        public StudentsController(UniversityDbContext context, IStudentsService studentsService)
+        public StudentsController(UniversityDbContext context, IStudentsService studentsService, ILogger<StudentsController> logger)
         {
             _context = context;
             _studentsService = studentsService;
+            _logger = logger;
         }
 
         // GET: api/Students
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Student>>> GetStudents()
         {
+            _logger.LogTrace($"{nameof(StudentsController)}  - {nameof(GetStudents)} - Trace Level Log");
+            _logger.LogDebug($"{nameof(StudentsController)}  - {nameof(GetStudents)} Debug Level Log");
+            _logger.LogInformation($"{nameof(StudentsController)}  - {nameof(GetStudents)} - Information Level Log");
+            _logger.LogWarning($"{nameof(StudentsController)}  - {nameof(GetStudents)} - Warning Level Log");
+            _logger.LogError($"{nameof(StudentsController)}  - {nameof(GetStudents)} - Error Level Log");
+            _logger.LogCritical($"{nameof(StudentsController)}  - {nameof(GetStudents)} - Critical Level Log");
+
             return await _context.Students.ToListAsync();
         }
 

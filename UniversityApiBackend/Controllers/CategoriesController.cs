@@ -18,16 +18,25 @@ namespace UniversityApiBackend.Controllers
     public class CategoriesController : ControllerBase
     {
         private readonly UniversityDbContext _context;
+        private readonly ILogger<CategoriesController> _logger;
 
-        public CategoriesController(UniversityDbContext context)
+        public CategoriesController(UniversityDbContext context, ILogger<CategoriesController> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         // GET: api/Categories
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Category>>> GetCategories()
         {
+            _logger.LogTrace($"{nameof(CategoriesController)}  - {nameof(GetCategories)} - Trace Level Log");
+            _logger.LogDebug($"{nameof(CategoriesController)}  - {nameof(GetCategories)} Debug Level Log");
+            _logger.LogInformation($"{nameof(CategoriesController)}  - {nameof(GetCategories)} - Information Level Log");
+            _logger.LogWarning($"{nameof(CategoriesController)}  - {nameof(GetCategories)} - Warning Level Log");
+            _logger.LogError($"{nameof(CategoriesController)}  - {nameof(GetCategories)} - Error Level Log");
+            _logger.LogCritical($"{nameof(CategoriesController)}  - {nameof(GetCategories)} - Critical Level Log");
+
             return await _context.Categories.ToListAsync();
         }
 

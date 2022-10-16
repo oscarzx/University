@@ -48,20 +48,24 @@ namespace UniversityApiBackend.Controllers
             {
                 var Token = new UserTokens();
 
-                //var Valid = Logins.Any(user => user.Name.Equals(userLogin.UserName, StringComparison.OrdinalIgnoreCase));
-                var Valid = _context.Users.Any(user => user.Name == userLogin.UserName  && user.Password==userLogin.Password);
+                // search user with LinQ
+                var searchUser = (from user in _context.Users
+                                 where user.Name == userLogin.UserName && user.Password == userLogin.Password
+                                 select user).FirstOrDefault();
+
+
+                //var Valid = _context.Users.Any(user => user.Name == userLogin.UserName  && user.Password==userLogin.Password);
 
                 
-                if (Valid)
+                if (searchUser != null)
                 {
                     //var user = Logins.FirstOrDefault(user => user.Name.Equals(userLogin.UserName, StringComparison.OrdinalIgnoreCase));
-                    var user = _context.Users.FirstOrDefault(user => user.Name == userLogin.UserName && user.Password == userLogin.Password);
 
                     Token = JwtHelpers.GenTokenKey(new UserTokens()
                     {
-                        UserName = user.Name,
-                        EmailId = user.Mail,
-                        Id = user.Id,
+                        UserName = searchUser.Name,
+                        EmailId = searchUser.Mail,
+                        Id = searchUser.Id,
                         GuidId = Guid.NewGuid()
                     }, _jwtSettings);
                 }
